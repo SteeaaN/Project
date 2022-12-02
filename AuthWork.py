@@ -4,7 +4,7 @@ from parms import *
 def ath_cheking(tp):
     ath_result = ath(tp)
     match ath_result:
-        case 0:
+        case None:
             return[0, False]
         case _:
             validly = check(ath_result[0])
@@ -21,12 +21,12 @@ def ath(tp):
     lg = input("Введите логин: ")
     match lg:
         case "0":
-            return 0
+            return None
         case lg if len(lg) > 2:
             pw = input("Введите пароль: ")
             match pw:
                 case pw if pw == "0":
-                    return 0
+                    return None
                 case pw if len(pw) > 2:
                     return [lg, pw]
                 case _:
@@ -54,14 +54,13 @@ def Lg_Checking(lg, pw, x):
             ath_cheking("login")
         case True:
             cursor.execute(f"SELECT password FROM users WHERE login = '{lg}'")
-            match cursor.fetchone():
-                case cursor.fetchone() if pw in cursor.fetchone():
-                    print("Успешно!")
-                    y = True
-                    return y
-                case _:
-                    print("Неверно введен логин или пароль.")
-                    ath_cheking("login")
+            if pw in cursor.fetchone():
+                print("Успешно!")
+                y = True
+                return y
+            else:
+                print("Неверно введен логин или пароль.")
+                ath_cheking("login")
 
 
 def Reg_Checking(lg, pw, x):
