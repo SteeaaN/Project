@@ -1,5 +1,7 @@
 from parms import *
 import requests
+from lxml import etree
+import lxml.html
 
 
 def printBalance(lg):
@@ -96,8 +98,10 @@ def spendsaves(lg):
 
 
 def course():
-    data = requests.get(f'https://openexchangerates.org/api/latest.json?app_id=51b953c64dbd4f13bd38dfbf65020dbc&base=USD&symbols=RUB').json()
-    print("1 Доллар США =", round(float(data['rates']["RUB"]), 2))
+    api = requests.get("https://www.cbr.ru/currency_base/daily/")
+    tree = lxml.html.document_fromstring(api.text)
+    crs = tree.xpath('//*[@id="content"]/div/div/div/div[3]/div/table/tbody/tr[12]/td[5]/text()')
+    print("1 USD =", crs[0][:-2], "RUB")
 
 
 def exiter():
