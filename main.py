@@ -44,4 +44,10 @@ class User:
             case _: print("Ошибка ввода")
         self.ansv()
 
-use = auth()
+
+def main():
+    use = auth()
+
+
+if __name__ == "__main__":
+    main()
